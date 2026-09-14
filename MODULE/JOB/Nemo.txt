@@ -1,0 +1,87 @@
+####################################################################################################
+
+new PlayerText: nemo[MAX_PLAYERS][8];
+
+nemo[playerid][0] = CreatePlayerTextDraw(playerid, 401.000, 186.000, "LD_SPAC:white");
+PlayerTextDrawTextSize(playerid, nemo[playerid][0], 94.000, 192.000);
+PlayerTextDrawAlignment(playerid, nemo[playerid][0], 1);
+PlayerTextDrawColor(playerid, nemo[playerid][0], 512819199);
+PlayerTextDrawSetShadow(playerid, nemo[playerid][0], 0);
+PlayerTextDrawSetOutline(playerid, nemo[playerid][0], 0);
+PlayerTextDrawBackgroundColor(playerid, nemo[playerid][0], 255);
+PlayerTextDrawFont(playerid, nemo[playerid][0], 4);
+PlayerTextDrawSetProportional(playerid, nemo[playerid][0], 1);
+
+nemo[playerid][1] = CreatePlayerTextDraw(playerid, 403.000, 186.000, "_");
+PlayerTextDrawTextSize(playerid, nemo[playerid][1], 90.000, 90.000);
+PlayerTextDrawAlignment(playerid, nemo[playerid][1], 1);
+PlayerTextDrawColor(playerid, nemo[playerid][1], -1);
+PlayerTextDrawSetShadow(playerid, nemo[playerid][1], 0);
+PlayerTextDrawSetOutline(playerid, nemo[playerid][1], 0);
+PlayerTextDrawBackgroundColor(playerid, nemo[playerid][1], 85);
+PlayerTextDrawFont(playerid, nemo[playerid][1], 5);
+PlayerTextDrawSetProportional(playerid, nemo[playerid][1], 0);
+PlayerTextDrawSetPreviewModel(playerid, nemo[playerid][1], 1604);
+PlayerTextDrawSetPreviewRot(playerid, nemo[playerid][1], -42.000, -2.000, -77.000, 1.000);
+PlayerTextDrawSetPreviewVehCol(playerid, nemo[playerid][1], 0, 0);
+
+nemo[playerid][2] = CreatePlayerTextDraw(playerid, 402.000, 368.000, "Otot Y Untuk Lanjut Mancing");
+PlayerTextDrawLetterSize(playerid, nemo[playerid][2], 0.140, 0.999);
+PlayerTextDrawAlignment(playerid, nemo[playerid][2], 1);
+PlayerTextDrawColor(playerid, nemo[playerid][2], -1);
+PlayerTextDrawSetShadow(playerid, nemo[playerid][2], 1);
+PlayerTextDrawSetOutline(playerid, nemo[playerid][2], 1);
+PlayerTextDrawBackgroundColor(playerid, nemo[playerid][2], 150);
+PlayerTextDrawFont(playerid, nemo[playerid][2], 2);
+PlayerTextDrawSetProportional(playerid, nemo[playerid][2], 1);
+
+nemo[playerid][3] = CreatePlayerTextDraw(playerid, 407.000, 275.000, "Anda Mendapatkan Ikan");
+PlayerTextDrawLetterSize(playerid, nemo[playerid][3], 0.210, 1.199);
+PlayerTextDrawAlignment(playerid, nemo[playerid][3], 1);
+PlayerTextDrawColor(playerid, nemo[playerid][3], -1);
+PlayerTextDrawSetShadow(playerid, nemo[playerid][3], 1);
+PlayerTextDrawSetOutline(playerid, nemo[playerid][3], 1);
+PlayerTextDrawBackgroundColor(playerid, nemo[playerid][3], 512819199);
+PlayerTextDrawFont(playerid, nemo[playerid][3], 1);
+PlayerTextDrawSetProportional(playerid, nemo[playerid][3], 1);
+
+nemo[playerid][4] = CreatePlayerTextDraw(playerid, 402.000, 299.000, "Jenis : Nemo");
+PlayerTextDrawLetterSize(playerid, nemo[playerid][4], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, nemo[playerid][4], 1);
+PlayerTextDrawColor(playerid, nemo[playerid][4], -1);
+PlayerTextDrawSetShadow(playerid, nemo[playerid][4], 1);
+PlayerTextDrawSetOutline(playerid, nemo[playerid][4], 1);
+PlayerTextDrawBackgroundColor(playerid, nemo[playerid][4], 512819199);
+PlayerTextDrawFont(playerid, nemo[playerid][4], 1);
+PlayerTextDrawSetProportional(playerid, nemo[playerid][4], 1);
+
+nemo[playerid][5] = CreatePlayerTextDraw(playerid, 402.000, 319.000, "Berat : 0,11 lbs");
+PlayerTextDrawLetterSize(playerid, nemo[playerid][5], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, nemo[playerid][5], 1);
+PlayerTextDrawColor(playerid, nemo[playerid][5], -1);
+PlayerTextDrawSetShadow(playerid, nemo[playerid][5], 1);
+PlayerTextDrawSetOutline(playerid, nemo[playerid][5], 1);
+PlayerTextDrawBackgroundColor(playerid, nemo[playerid][5], 512819199);
+PlayerTextDrawFont(playerid, nemo[playerid][5], 1);
+PlayerTextDrawSetProportional(playerid, nemo[playerid][5], 1);
+
+nemo[playerid][6] = CreatePlayerTextDraw(playerid, 402.000, 339.000, "Kondisi : Baik");
+PlayerTextDrawLetterSize(playerid, nemo[playerid][6], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, nemo[playerid][6], 1);
+PlayerTextDrawColor(playerid, nemo[playerid][6], -1);
+PlayerTextDrawSetShadow(playerid, nemo[playerid][6], 1);
+PlayerTextDrawSetOutline(playerid, nemo[playerid][6], 1);
+PlayerTextDrawBackgroundColor(playerid, nemo[playerid][6], 512819199);
+PlayerTextDrawFont(playerid, nemo[playerid][6], 1);
+PlayerTextDrawSetProportional(playerid, nemo[playerid][6], 1);
+
+nemo[playerid][7] = CreatePlayerTextDraw(playerid, 390.000, 174.000, "Strike Boss Kuhh");
+PlayerTextDrawLetterSize(playerid, nemo[playerid][7], 0.300, 1.500);
+PlayerTextDrawAlignment(playerid, nemo[playerid][7], 1);
+PlayerTextDrawColor(playerid, nemo[playerid][7], -1);
+PlayerTextDrawSetShadow(playerid, nemo[playerid][7], 1);
+PlayerTextDrawSetOutline(playerid, nemo[playerid][7], 1);
+PlayerTextDrawBackgroundColor(playerid, nemo[playerid][7], 150);
+PlayerTextDrawFont(playerid, nemo[playerid][7], 2);
+PlayerTextDrawSetProportional(playerid, nemo[playerid][7], 1);
+

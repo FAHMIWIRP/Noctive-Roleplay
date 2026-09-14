@@ -1,0 +1,87 @@
+####################################################################################################
+
+new PlayerText: dildo[MAX_PLAYERS][8];
+
+dildo[playerid][0] = CreatePlayerTextDraw(playerid, 401.000, 186.000, "LD_SPAC:white");
+PlayerTextDrawTextSize(playerid, dildo[playerid][0], 94.000, 192.000);
+PlayerTextDrawAlignment(playerid, dildo[playerid][0], 1);
+PlayerTextDrawColor(playerid, dildo[playerid][0], 512819199);
+PlayerTextDrawSetShadow(playerid, dildo[playerid][0], 0);
+PlayerTextDrawSetOutline(playerid, dildo[playerid][0], 0);
+PlayerTextDrawBackgroundColor(playerid, dildo[playerid][0], 255);
+PlayerTextDrawFont(playerid, dildo[playerid][0], 4);
+PlayerTextDrawSetProportional(playerid, dildo[playerid][0], 1);
+
+dildo[playerid][1] = CreatePlayerTextDraw(playerid, 403.000, 186.000, "_");
+PlayerTextDrawTextSize(playerid, dildo[playerid][1], 90.000, 90.000);
+PlayerTextDrawAlignment(playerid, dildo[playerid][1], 1);
+PlayerTextDrawColor(playerid, dildo[playerid][1], -1);
+PlayerTextDrawSetShadow(playerid, dildo[playerid][1], 0);
+PlayerTextDrawSetOutline(playerid, dildo[playerid][1], 0);
+PlayerTextDrawBackgroundColor(playerid, dildo[playerid][1], 85);
+PlayerTextDrawFont(playerid, dildo[playerid][1], 5);
+PlayerTextDrawSetProportional(playerid, dildo[playerid][1], 0);
+PlayerTextDrawSetPreviewModel(playerid, dildo[playerid][1], 321);
+PlayerTextDrawSetPreviewRot(playerid, dildo[playerid][1], -213.000, -89.000, -322.000, 0.299);
+PlayerTextDrawSetPreviewVehCol(playerid, dildo[playerid][1], 0, 0);
+
+dildo[playerid][2] = CreatePlayerTextDraw(playerid, 402.000, 368.000, "Otot Y Untuk Lanjut Mancing");
+PlayerTextDrawLetterSize(playerid, dildo[playerid][2], 0.140, 0.999);
+PlayerTextDrawAlignment(playerid, dildo[playerid][2], 1);
+PlayerTextDrawColor(playerid, dildo[playerid][2], -1);
+PlayerTextDrawSetShadow(playerid, dildo[playerid][2], 1);
+PlayerTextDrawSetOutline(playerid, dildo[playerid][2], 1);
+PlayerTextDrawBackgroundColor(playerid, dildo[playerid][2], 150);
+PlayerTextDrawFont(playerid, dildo[playerid][2], 2);
+PlayerTextDrawSetProportional(playerid, dildo[playerid][2], 1);
+
+dildo[playerid][3] = CreatePlayerTextDraw(playerid, 406.000, 273.000, "Anda Mendapatkan Dildo");
+PlayerTextDrawLetterSize(playerid, dildo[playerid][3], 0.210, 1.199);
+PlayerTextDrawAlignment(playerid, dildo[playerid][3], 1);
+PlayerTextDrawColor(playerid, dildo[playerid][3], -1);
+PlayerTextDrawSetShadow(playerid, dildo[playerid][3], 1);
+PlayerTextDrawSetOutline(playerid, dildo[playerid][3], 1);
+PlayerTextDrawBackgroundColor(playerid, dildo[playerid][3], 512819199);
+PlayerTextDrawFont(playerid, dildo[playerid][3], 1);
+PlayerTextDrawSetProportional(playerid, dildo[playerid][3], 1);
+
+dildo[playerid][4] = CreatePlayerTextDraw(playerid, 402.000, 299.000, "Jenis : Dildo");
+PlayerTextDrawLetterSize(playerid, dildo[playerid][4], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, dildo[playerid][4], 1);
+PlayerTextDrawColor(playerid, dildo[playerid][4], -1);
+PlayerTextDrawSetShadow(playerid, dildo[playerid][4], 1);
+PlayerTextDrawSetOutline(playerid, dildo[playerid][4], 1);
+PlayerTextDrawBackgroundColor(playerid, dildo[playerid][4], 512819199);
+PlayerTextDrawFont(playerid, dildo[playerid][4], 1);
+PlayerTextDrawSetProportional(playerid, dildo[playerid][4], 1);
+
+dildo[playerid][5] = CreatePlayerTextDraw(playerid, 402.000, 319.000, "Berat : ????");
+PlayerTextDrawLetterSize(playerid, dildo[playerid][5], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, dildo[playerid][5], 1);
+PlayerTextDrawColor(playerid, dildo[playerid][5], -1);
+PlayerTextDrawSetShadow(playerid, dildo[playerid][5], 1);
+PlayerTextDrawSetOutline(playerid, dildo[playerid][5], 1);
+PlayerTextDrawBackgroundColor(playerid, dildo[playerid][5], 512819199);
+PlayerTextDrawFont(playerid, dildo[playerid][5], 1);
+PlayerTextDrawSetProportional(playerid, dildo[playerid][5], 1);
+
+dildo[playerid][6] = CreatePlayerTextDraw(playerid, 402.000, 339.000, "Kondisi : Bau");
+PlayerTextDrawLetterSize(playerid, dildo[playerid][6], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, dildo[playerid][6], 1);
+PlayerTextDrawColor(playerid, dildo[playerid][6], -1);
+PlayerTextDrawSetShadow(playerid, dildo[playerid][6], 1);
+PlayerTextDrawSetOutline(playerid, dildo[playerid][6], 1);
+PlayerTextDrawBackgroundColor(playerid, dildo[playerid][6], 512819199);
+PlayerTextDrawFont(playerid, dildo[playerid][6], 1);
+PlayerTextDrawSetProportional(playerid, dildo[playerid][6], 1);
+
+dildo[playerid][7] = CreatePlayerTextDraw(playerid, 390.000, 174.000, "Strike Boss Kuhh");
+PlayerTextDrawLetterSize(playerid, dildo[playerid][7], 0.300, 1.500);
+PlayerTextDrawAlignment(playerid, dildo[playerid][7], 1);
+PlayerTextDrawColor(playerid, dildo[playerid][7], -1);
+PlayerTextDrawSetShadow(playerid, dildo[playerid][7], 1);
+PlayerTextDrawSetOutline(playerid, dildo[playerid][7], 1);
+PlayerTextDrawBackgroundColor(playerid, dildo[playerid][7], 150);
+PlayerTextDrawFont(playerid, dildo[playerid][7], 2);
+PlayerTextDrawSetProportional(playerid, dildo[playerid][7], 1);
+

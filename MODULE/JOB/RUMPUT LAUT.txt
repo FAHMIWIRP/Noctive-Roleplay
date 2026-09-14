@@ -1,0 +1,87 @@
+####################################################################################################
+
+new PlayerText: runput[MAX_PLAYERS][8];
+
+runput[playerid][0] = CreatePlayerTextDraw(playerid, 401.000, 186.000, "LD_SPAC:white");
+PlayerTextDrawTextSize(playerid, runput[playerid][0], 94.000, 192.000);
+PlayerTextDrawAlignment(playerid, runput[playerid][0], 1);
+PlayerTextDrawColor(playerid, runput[playerid][0], 512819199);
+PlayerTextDrawSetShadow(playerid, runput[playerid][0], 0);
+PlayerTextDrawSetOutline(playerid, runput[playerid][0], 0);
+PlayerTextDrawBackgroundColor(playerid, runput[playerid][0], 255);
+PlayerTextDrawFont(playerid, runput[playerid][0], 4);
+PlayerTextDrawSetProportional(playerid, runput[playerid][0], 1);
+
+runput[playerid][1] = CreatePlayerTextDraw(playerid, 403.000, 186.000, "_");
+PlayerTextDrawTextSize(playerid, runput[playerid][1], 90.000, 90.000);
+PlayerTextDrawAlignment(playerid, runput[playerid][1], 1);
+PlayerTextDrawColor(playerid, runput[playerid][1], -1);
+PlayerTextDrawSetShadow(playerid, runput[playerid][1], 0);
+PlayerTextDrawSetOutline(playerid, runput[playerid][1], 0);
+PlayerTextDrawBackgroundColor(playerid, runput[playerid][1], 85);
+PlayerTextDrawFont(playerid, runput[playerid][1], 5);
+PlayerTextDrawSetProportional(playerid, runput[playerid][1], 0);
+PlayerTextDrawSetPreviewModel(playerid, runput[playerid][1], 903);
+PlayerTextDrawSetPreviewRot(playerid, runput[playerid][1], -204.000, 1.000, -362.000, 0.599);
+PlayerTextDrawSetPreviewVehCol(playerid, runput[playerid][1], 0, 0);
+
+runput[playerid][2] = CreatePlayerTextDraw(playerid, 402.000, 368.000, "Otot Y Untuk Lanjut Mancing");
+PlayerTextDrawLetterSize(playerid, runput[playerid][2], 0.140, 0.999);
+PlayerTextDrawAlignment(playerid, runput[playerid][2], 1);
+PlayerTextDrawColor(playerid, runput[playerid][2], -1);
+PlayerTextDrawSetShadow(playerid, runput[playerid][2], 1);
+PlayerTextDrawSetOutline(playerid, runput[playerid][2], 1);
+PlayerTextDrawBackgroundColor(playerid, runput[playerid][2], 150);
+PlayerTextDrawFont(playerid, runput[playerid][2], 2);
+PlayerTextDrawSetProportional(playerid, runput[playerid][2], 1);
+
+runput[playerid][3] = CreatePlayerTextDraw(playerid, 406.000, 273.000, "Anda Mendapatkan Rumput Laut");
+PlayerTextDrawLetterSize(playerid, runput[playerid][3], 0.160, 1.399);
+PlayerTextDrawAlignment(playerid, runput[playerid][3], 1);
+PlayerTextDrawColor(playerid, runput[playerid][3], -1);
+PlayerTextDrawSetShadow(playerid, runput[playerid][3], 1);
+PlayerTextDrawSetOutline(playerid, runput[playerid][3], 1);
+PlayerTextDrawBackgroundColor(playerid, runput[playerid][3], 512819199);
+PlayerTextDrawFont(playerid, runput[playerid][3], 1);
+PlayerTextDrawSetProportional(playerid, runput[playerid][3], 1);
+
+runput[playerid][4] = CreatePlayerTextDraw(playerid, 402.000, 299.000, "Jenis : Rumput Laut");
+PlayerTextDrawLetterSize(playerid, runput[playerid][4], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, runput[playerid][4], 1);
+PlayerTextDrawColor(playerid, runput[playerid][4], -1);
+PlayerTextDrawSetShadow(playerid, runput[playerid][4], 1);
+PlayerTextDrawSetOutline(playerid, runput[playerid][4], 1);
+PlayerTextDrawBackgroundColor(playerid, runput[playerid][4], 512819199);
+PlayerTextDrawFont(playerid, runput[playerid][4], 1);
+PlayerTextDrawSetProportional(playerid, runput[playerid][4], 1);
+
+runput[playerid][5] = CreatePlayerTextDraw(playerid, 402.000, 319.000, "Berat : ????");
+PlayerTextDrawLetterSize(playerid, runput[playerid][5], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, runput[playerid][5], 1);
+PlayerTextDrawColor(playerid, runput[playerid][5], -1);
+PlayerTextDrawSetShadow(playerid, runput[playerid][5], 1);
+PlayerTextDrawSetOutline(playerid, runput[playerid][5], 1);
+PlayerTextDrawBackgroundColor(playerid, runput[playerid][5], 512819199);
+PlayerTextDrawFont(playerid, runput[playerid][5], 1);
+PlayerTextDrawSetProportional(playerid, runput[playerid][5], 1);
+
+runput[playerid][6] = CreatePlayerTextDraw(playerid, 402.000, 339.000, "Kondisi : Baik");
+PlayerTextDrawLetterSize(playerid, runput[playerid][6], 0.230, 0.999);
+PlayerTextDrawAlignment(playerid, runput[playerid][6], 1);
+PlayerTextDrawColor(playerid, runput[playerid][6], -1);
+PlayerTextDrawSetShadow(playerid, runput[playerid][6], 1);
+PlayerTextDrawSetOutline(playerid, runput[playerid][6], 1);
+PlayerTextDrawBackgroundColor(playerid, runput[playerid][6], 512819199);
+PlayerTextDrawFont(playerid, runput[playerid][6], 1);
+PlayerTextDrawSetProportional(playerid, runput[playerid][6], 1);
+
+runput[playerid][7] = CreatePlayerTextDraw(playerid, 390.000, 174.000, "Strike Boss Kuhh");
+PlayerTextDrawLetterSize(playerid, runput[playerid][7], 0.300, 1.500);
+PlayerTextDrawAlignment(playerid, runput[playerid][7], 1);
+PlayerTextDrawColor(playerid, runput[playerid][7], -1);
+PlayerTextDrawSetShadow(playerid, runput[playerid][7], 1);
+PlayerTextDrawSetOutline(playerid, runput[playerid][7], 1);
+PlayerTextDrawBackgroundColor(playerid, runput[playerid][7], 150);
+PlayerTextDrawFont(playerid, runput[playerid][7], 2);
+PlayerTextDrawSetProportional(playerid, runput[playerid][7], 1);
+
