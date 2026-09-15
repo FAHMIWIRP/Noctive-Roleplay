@@ -32,7 +32,7 @@
  (_,_)  (_,_)  (_,_)  (_,_)  (_,_)  (_,_)  (_,_)  (_,_)  (_,_)
  */
  
-#pragma warning disable 217, 203, 204, 211, 202, 215, 219, 213, 225, 209, 216, 235, 201
+#pragma warning disable 217, 203, 204, 211, 202, 215, 219, 213, 225, 209, 216, 235, 201, 224
 //=========SAMP INCLUDE SISTEM=============
 #include <a_samp>
 #include <sampvoice>
@@ -6839,7 +6839,7 @@ stock ValidGarkot()
 enum pInfo
 {
 	// global
-	pPaketrm, pKosong, pID, pName[MAX_PLAYER_NAME], pIP[16], pPassword[33], pass_salt[6], pMail[64], pPodtvMail, pIpReg[16], pIp[16], pReferal, pLogin, Float: pHP, Float: pArmour, pSatiety, pThirst, pStress, pSex, pSkin, pCash, pBank, pLevel, pExp, pMember, pRank, pLeader, pJob,
+	pCountry, pBirthDate, pPaketrm, pKosong, pID, pName[MAX_PLAYER_NAME], pIP[16], pPassword[33], pass_salt[6], pMail[64], pPodtvMail, pIpReg[16], pIp[16], pReferal, pLogin, Float: pHP, Float: pArmour, pSatiety, pThirst, pStress, pSex, pSkin, pCash, pBank, pLevel, pExp, pMember, pRank, pLeader, pJob,
 	pDrugs, pDrugDep, pRedmoney, pKura, pPos[200], pMetall, pRadio, pRadioFreq[11], Text3D:pAme, pMarkTemp, pDutyKuli, pSemenKuli, pKuliMedkit, pKuliAyam, pDutyAyam, pDutyMedkit, pKuliSusu, pPaket, Text3D:pAdo, pUseCar, pProducts[3], pNumber, pKuli1, pKuli2, pKuli3, pSummaNumber, pWargaNew, pDeath, pDeathTime, pInjured, pDelayDeath, pComponent, pActivityTime, pArmsDealer, pGaeGun, pSatietyBarActive, pZakon, pWanted, pfWarn, pMuted, pPayCheck, pUpdPlayer[5], pInGameSeconds, pInGameAFKSeconds, pInGameHourSeconds, pClock, pFreeRoulet, pSupport,
 	pCheckGoogle, pPrison, pMestoPrison, pGun[13], pAmmo[13], pBolnica, pTogPm, pHackBank, gEditID, gEdit, pInDoor, pInHouse, pTogTP, pInBiz, pSpawnSapd, pBanki, Float:pPosX, Float:pPosY, Float:pPosZ, Float:pPosA, pInt, pVw, pStyle, pWS, pWSJob, pWSid, pWSBos, pFlare, pKtp, pAge, pOrigin, pTut, pFrSkin, pFood, pDrink, pDutyAdmin, pLicenses[5], pGunSkill[6], pText, pHeals, pRouble, pVip, pVipTime, pPromo[64], pHotel, pMask, pClip, pInfSatiety, pRepairKit, pBoombox, pElecVote, pHelm, Interior, VirtualWorld, pSawit, pDurability, pLockpick, pTelevisi, pEmasilegal, pNorek, pHoe,
 	pGPCI[40], pMenikah[MAX_PLAYER_NAME], pOnline[16], pBatu, pTarget, pPadi, pLogPay, Text3D:pDisco, pAyam, pSemen, pDutynambang, pPickupnambang, pEmas, pMedkit, pRm, pMicin, pDragged, pDraggedBy, pDragTimer, pPwMasuk, pMinyakbersih, pMinyakkotor, pDutyminyak, pJobtaxi, pGiokhijau, pGiokputih, pGiokbintang, pGiokrainbow, pGiok, pKanabis, pSeeds, pKentang, pPaddi, pSakitcik, pMedicine, pClipslc, pDagingrusa, pBatuk, pJobcompo, pJoboil, pJobminer, pJobconstruction, pJobchiken, pJobpadi, pRewardClaimed, pWorkedOnce, pTakenJob, pCreatedID, pClaimedSP, pJobbm, pDutypacking, pHbemode, pGiokpermata, pGiokCleanliness, pGiokTimer, pFirearmsExpire, pFirearms, pNKoin, pJailTime, pSususapi, pDutypemerassusu, pJobPenebang, pKayu, pShovel, pVbasic, pVsilver, pVgold, pVpro,
@@ -6900,6 +6900,25 @@ enum pInfo
 new bool:PinSelesai[MAX_PLAYERS];
 new PlayerInfo[MAX_PLAYERS][pInfo];
 #define pData   PlayerInfo
+new PlayerCountry[MAX_PLAYERS][32];
+new PlayerBirthDate[MAX_PLAYERS][20];
+
+// Array untuk registrasi
+new RegStep[MAX_PLAYERS]; // 1=password, 2=confirm, 3=bulan, 4=tahun, 5=tanggal, 6=gender, 7=negara
+new RegPass[MAX_PLAYERS][65];
+new RegMonth[MAX_PLAYERS], RegYear[MAX_PLAYERS], RegDay[MAX_PLAYERS];
+new RegGender[MAX_PLAYERS];
+new RegCountry[MAX_PLAYERS][32];
+
+// 30 negara untuk roleplay
+static const Countries[30][] = {
+    "Indonesia", "Amerika Serikat", "Inggris", "Jerman", "Perancis",
+    "Italia", "Spanyol", "Portugal", "Belanda", "Belgia",
+    "Swiss", "Austria", "Swedia", "Norwegia", "Denmark",
+    "Finlandia", "Polandia", "Rusia", "Ukraina", "Ceko",
+    "Hungaria", "Rumania", "Bulgaria", "Yunani", "Turki",
+    "Jepang", "Korea Selatan", "China", "India", "Brasil"
+};
 
 stock bool:CanUseRadio(playerid)
 {
@@ -57116,7 +57135,6 @@ public OnPlayerConnect(playerid)
 {
 	PinDisplay[playerid] = PlayerText:INVALID_TEXT_DRAW;
     PinSelesai[playerid] = false;
-    pinIsOpen[playerid] = false;	
 
     // Reset dan inisialisasi semua slot textdraw saat pemain baru masuk server
     for(new i = 0; i < MAX_NOTIFS; i++)
@@ -72154,13 +72172,6 @@ public OnVehicleDeath(vehicleid, killerid)
 
 public OnPlayerText(playerid, text[])
 {
-    // PENGECUALIAN PIN: dilarang berbicara selama verifikasi berlangsung
-    if (pinIsOpen[playerid])
-    {
-        ShowPanjulNotif(playerid, "Anda tidak dapat berbicara selama proses verifikasi PIN berlangsung.");
-        return 0; // pesan dibuang, tidak dikirim ke siapa pun
-    }
-		
     // 0. Abaikan jika input adalah Command (diawali tanda '/')
     if(text[0] == '/') return 0;
 
@@ -75691,6 +75702,14 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 			}
 		}
 	}
+	if ((newkeys & KEY_YES) && !(oldkeys & KEY_YES)) { // Tombol [Y]
+    new idx = GetNearestVending(playerid);
+    if (idx != -1) {
+        SetPVarInt(playerid, "UsingVending", idx);
+        ShowPlayerDialog(playerid, DIALOG_VENDING_BUY, DIALOG_STYLE_LIST,
+            "Vending Machine - Belanja", "Makanan\nMinuman", "Beli", "Batal");
+    }
+}
 if(newkeys & KEY_SECONDARY_ATTACK)
 {
     // MASUK BIZZ
@@ -83191,41 +83210,34 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
    	 	}
 	}
 
-    if(dialogid == DIALOG_FIXME)//FIXME BY CARL
-    {
-        if(response)
-        {
-            // PENGECUALIAN PIN: tolak SEMUA opsi perbaikan selama keypad PIN terbuka
-            if (pinIsOpen[playerid])
-            {
-                ShowPanjulNotif(playerid, "Permintaan fixme ditolak selama verifikasi PIN berlangsung.");
-                return 1;
-            }
+	if(dialogid ==  DIALOG_FIXME)//FIXME BY CARL
+	{
+		if(response)
+		{
+			switch(listitem)
+			{
+				case 0:
+				{
+				    SetPlayerInterior(playerid, 0);
+				    SetPlayerVirtualWorld(playerid, 0);
+				    SendClientMessage(playerid, 1, "Anda memperbaiki visual anda.");
+				}
+				case 1:
+				{
+					new Float:POS[3];
+				    GetPlayerPos(playerid, POS[0], POS[1], POS[2]);
+					SetPlayerPos(playerid, POS[0], POS[1], POS[2] + 9.0);
+				    SendClientMessage(playerid, 1, "Anda memperbaiki posisi anda.");
+				}
+				case 2:
+				{
+					TogglePlayerControllable(playerid, 1);
+				    SendClientMessage(playerid, 1, "Anda memperbaiki karakter stuck anda.");
 
-            switch(listitem)
-            {
-                case 0:
-                {
-                    SetPlayerInterior(playerid, 0);
-                    SetPlayerVirtualWorld(playerid, 0);
-                    SendClientMessage(playerid, 1, "Anda memperbaiki visual anda.");
-                }
-                case 1:
-                {
-                    new Float:POS[3];
-                    GetPlayerPos(playerid, POS[0], POS[1], POS[2]);
-                    SetPlayerPos(playerid, POS[0], POS[1], POS[2] + 9.0);
-                    SendClientMessage(playerid, 1, "Anda memperbaiki posisi anda.");
-                }
-                case 2:
-                {
-                    if (pinIsOpen[playerid]) return 1; // lapis kedua, khusus penjaga unfreeze
-                    TogglePlayerControllable(playerid, 1);
-                    SendClientMessage(playerid, 1, "Anda memperbaiki karakter stuck anda.");
-                }
-            }
-            return 1;
-        }
+    	}
+		    }
+		    return 1;
+	    }
     }
 
     if(dialogid == DIALOG_ADDNITRO)
@@ -89714,7 +89726,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 	        PlayerInfo[playerid][pSkin] = GetPlayerSkin(playerid);
 	    }
 	    case 0: return 1;
-	    case 1:
+		case 1:
 	    {
 	        if(!response) return KickD(playerid,"Anda telah menolak proses otorisasi, gunakan /q(quit) untuk keluar.");
 	        if(!strlen(inputtext))
@@ -89741,89 +89753,106 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 if(GetPVarInt(playerid, "wrongPass") == 3) return KickD(playerid, "Anda telah ditendang karena berulang kali memasukkan kata sandi yang salah.");
             }
 		}
+		
 		case 2:
 		{
-		    if(!response) return KickD(playerid,"Anda telah meninggalkan proses pendaftaran, gunakan /q(quit) untuk keluar.");
+			if(!response) return KickD(playerid,"Anda telah meninggalkan proses pendaftaran, gunakan /q(quit) untuk keluar.");
 			if(!strlen(inputtext) || strlen(inputtext) < 6 || strlen(inputtext) > 15)
-				return DialogReg(playerid);/*SPD(playerid, 2, DIALOG_STYLE_INPUT, "Tandatangan", ""W"Selamat datang di server Unity SAMP\nAnda perlu mendaftar untuk permainan.\n\n\
-				Masukkan kata sandi akun Anda,\n itu akan diminta setiap kali Anda masuk ke server.\n\n{32CD32}Di dekat Primania:\n\
-				- Kata sandi hanya dapat terdiri dari simbol Latin\n- Kata Sandi Valid untuk mendaftar\n{FFDAB9}- Panjang kata sandi dari 6 hingga 12 karakter", "Yaa", "Exit");*/
+				return DialogReg(playerid);
 
-            strmid(PlayerInfo[playerid][pass_salt], gensalt(), 0, 6, 6);// generasi garam
-			strmid(PlayerInfo[playerid][pPassword], hashit(PlayerInfo[playerid][pass_salt],inputtext), 0, 33, 33);// generasi hash melalui garam.
-
+			strmid(RegPass[playerid], inputtext, 0, strlen(inputtext), 65);
+			RegStep[playerid] = 2;
+			return DialogRegConfirmPass(playerid);
+		}
+		
+		case 5:
+		{
+			if(response) 
+			{
+				PlayerInfo[playerid][pSex] = 1;
+				PlayerInfo[playerid][pSkin] = 259;
+				OnPlayerUpdateAccountsPer(playerid, "pSex", PlayerInfo[playerid][pSex]);
+				OnPlayerUpdateAccountsPer(playerid, "pSkin", PlayerInfo[playerid][pSkin]);
+			}
+			else 
+			{
+				PlayerInfo[playerid][pSex] = 2;
+				PlayerInfo[playerid][pSkin] = 193;
+				OnPlayerUpdateAccountsPer(playerid, "pSex", PlayerInfo[playerid][pSex]);
+				OnPlayerUpdateAccountsPer(playerid, "pSkin", PlayerInfo[playerid][pSkin]);
+			}
+			
+			RegStep[playerid] = 7;
+			return DialogRegCountry(playerid);
+		}
+		
+		case 9010: // Konfirmasi Password
+		{
+			if(!response) return DialogReg(playerid);
+			if(strcmp(inputtext, RegPass[playerid]) != 0)
+			{
+				return DialogRegConfirmPass(playerid);
+			}
+			
+			strmid(PlayerInfo[playerid][pass_salt], gensalt(), 0, 6, 6);
+			strmid(PlayerInfo[playerid][pPassword], hashit(PlayerInfo[playerid][pass_salt], inputtext), 0, 33, 33);
+			
 			SetPVarInt(playerid, "Register", 1);
-			return SPD(playerid, 3, DIALOG_STYLE_INPUT, "Email", ""W"Masukkan alamat email Anda.\nMenggunakannya, Anda dapat memulihkan akses ke akun Anda.\n\n\
-			Jika Anda kehilangan sandi, Anda dapat memulihkannya di situs web {a86cfc}www.starsrp.com\n\n"W"Pastikan masukan Anda benar dan klik 'Lainnya'", "Lainnya", "Lewati");
+			RegStep[playerid] = 3;
+			DialogRegMonth(playerid);
+			return 1;
 		}
-		case 3:
+
+		case 9011: // Pilih Bulan
 		{
-		    if(!response && GetPVarInt(playerid, "Register"))
-			{
-				strmid(PlayerInfo[playerid][pMail],"None",0,strlen("None"),64);
-				PromoReg(playerid);
-				//SPD(playerid,4,DIALOG_STYLE_INPUT,"Nickname dari pemain yang mengundang",""W"Jika Anda mengetahui tentang server kami dari teman Anda\nyang bermain di sini, masukkan nama panggilannya di bidang di bawah ini\n\n{B8E82A}Saat Anda mencapai Pada tingkat 5 dia akan menerima hadiah", "Masuk", "Lewati");
-			}
-
-            if(!response) return 1;
-			if(strlen(inputtext) > 5 && strfind(inputtext, "@", true) != -1)
-			{
-			    format(MySQLStr, 128, "SELECT * FROM `accounts` WHERE `pMail` = '%s'", inputtext);
-			    mysql_tquery(mMysql, MySQLStr, "OnMySQL_Query","iis",playerid,1,inputtext);
-
-			    //if(mysql_errno()) return MysqlErrorMessage(playerid);
-			    return 1;
-   			}
-   			else SPD(playerid, 3, DIALOG_STYLE_INPUT, "Email", ""W"Masukkan alamat email Anda.\nDengan menggunakannya, Anda dapat memulihkan akses ke akun Anda.\n\n\
-			Jika Anda kehilangan sandi, Anda dapat memulihkannya di situs web {a86cfc}www.starsrp.com\n\n"W"Pastikan Anda memasukkan sandi dengan benar dan tekan 'Lewati'\n\n{FFDAB9}Harap masukkan alamat email yang valid", "Lainnya", "Lewati");
+			if(!response) return DialogRegConfirmPass(playerid);
+			RegMonth[playerid] = listitem + 1;
+			RegStep[playerid] = 4;
+			return DialogRegYear(playerid);
 		}
-				case 4:
+
+		case 9012: // Pilih Tahun
 		{
-		    if(!response)
-			{
-				PlayerInfo[playerid][pReferal] = 0;
-				return SPD(playerid,5,DIALOG_STYLE_MSGBOX,"Gender",""W"{FFFFFF}Pilih jenis kelamin karakter Anda","Laki-Laki","Wanita");
-			}
+			if(!response) return DialogRegMonth(playerid);
+			RegYear[playerid] = 2010 - listitem;
+			RegStep[playerid] = 5;
+			return DialogRegDay(playerid);
+		}
 
-			if(strfind(GetPlayerNameEx(playerid), inputtext) != -1) return PromoReg(playerid);
+		case 9013: // Pilih Tanggal
+		{
+			if(!response) return DialogRegYear(playerid);
+			RegDay[playerid] = listitem + 1;
+			RegStep[playerid] = 6;
+			return SPD(playerid, 5, DIALOG_STYLE_MSGBOX, "Jenis Kelamin", "{FFFFFF}Pilih jenis kelamin karakter.", "Laki-Laki", "Wanita");
+		}
 
-		    mysql_format(mMysql, MySQLStr, 144, "SELECT `pID` FROM `accounts` WHERE `pName` = '%e'", inputtext);
-		    mysql_tquery(mMysql, MySQLStr, "OnMySQL_Query","iis",playerid,2,inputtext);
-
-		    //if(mysql_errno()) return MysqlErrorMessage(playerid);
-  		}
-  		case 5:
-  		{
-  		    // Mengatur gender dan skin sesuai pilihan
-  		    if(response) 
-  		    {
-  		        PlayerInfo[playerid][pSex] = 1; // Laki-Laki
-  		        PlayerInfo[playerid][pSkin] = 259; // Skin Cowo
-                  OnPlayerUpdateAccountsPer(playerid, "pSex", PlayerInfo[playerid][pSex]);
-                  OnPlayerUpdateAccountsPer(playerid, "pSkin", PlayerInfo[playerid][pSkin]);
-  		    }
-  		    else 
-  		    {
-  		        PlayerInfo[playerid][pSex] = 2; // Wanita
-  		        PlayerInfo[playerid][pSkin] = 193; // Skin Cewe
-                  OnPlayerUpdateAccountsPer(playerid, "pSex", PlayerInfo[playerid][pSex]);
-                  OnPlayerUpdateAccountsPer(playerid, "pSkin", PlayerInfo[playerid][pSkin]);
-  		    }
-
-	  		// regam acc
-     		new strstre[16];
-			format(strstre, 16, "%02d.%02d.%d",day,month,year);
-
+		case 9014: // Pilih Negara
+		{
+			if(!response) return SPD(playerid, 5, DIALOG_STYLE_MSGBOX, "Jenis Kelamin", "{FFFFFF}Pilih jenis kelamin karakter.", "Laki-Laki", "Wanita");
+			strmid(RegCountry[playerid], Countries[listitem], 0, strlen(Countries[listitem]), 32);
+			
+			format(PlayerCountry[playerid], 32, "%s", RegCountry[playerid]);
+			format(PlayerBirthDate[playerid], 20, "%02d/%02d/%04d", RegDay[playerid], RegMonth[playerid], RegYear[playerid]);			
+			new strstre[16], year, month, day;
+			getdate(year, month, day);
+			format(strstre, 16, "%02d.%02d.%d", day, month, year);
+			
 			DeletePVar(playerid, "Register");
-
-			mysql_format(mMysql, MySQLStr, 388, "INSERT INTO `accounts` (`pName`, `pPassword`, `pass_salt`, `pMail`,`pDataReg`,`pIpReg`,`pIp`,`pOnline`,`pReferal`,`pSex`,`pSkin`,`pLogin`) VALUES ('%e','%e','%s','%e','%s','%s','%s','%s',%i,%d,%d,'1')",
-			Name(playerid),PlayerInfo[playerid][pPassword], PlayerInfo[playerid][pass_salt], PlayerInfo[playerid][pMail],strstre,GetPlayerIpEx(playerid),GetPlayerIpEx(playerid),strstre,PlayerInfo[playerid][pReferal], PlayerInfo[playerid][pSex], PlayerInfo[playerid][pSkin]);
+			
+			mysql_format(mMysql, MySQLStr, 512, "INSERT INTO `accounts` (`pName`, `pPassword`, `pass_salt`, `pCountry`, `pBirthDate`, `pDataReg`,`pIpReg`,`pIp`,`pOnline`,`pSex`,`pSkin`,`pLogin`) VALUES ('%e','%e','%s','%e','%e','%s','%s','%s','%s',%d,%d,'1')",
+				Name(playerid), PlayerInfo[playerid][pPassword], PlayerInfo[playerid][pass_salt], 
+				PlayerCountry[playerid], PlayerBirthDate[playerid],
+				strstre, GetPlayerIpEx(playerid), GetPlayerIpEx(playerid), strstre, 
+				PlayerInfo[playerid][pSex], PlayerInfo[playerid][pSkin]);
 			mysql_pquery(mMysql, MySQLStr, "OnServerRegistration", "d", playerid);
-
-   			SCMF(playerid, 0x7DD900FF, "kamu {02BED9}%s {7DD900}berhasil register!", Name(playerid));
-			//if(mysql_errno()) return MysqlErrorMessage(playerid);
+			
+			new regmsg[128];
+			format(regmsg, sizeof(regmsg), "{02BED9}%s {7DD900}berhasil register!", Name(playerid));
+			SendClientMessage(playerid, 0x7DD900FF, regmsg);
 			PlayerPlaySound(playerid, 1069, 0.0, 0.0, 0.0);
-	   	}
+			return 1;
+		}
 	   	case 6:
 	   	{
 			if(!response) return 1;
@@ -95346,30 +95375,7 @@ public OnPlayerClickDynamicTextdraw(playerid, PlayerText:playertextid)
     }*/
 	return 1;
 }
-new PinWatchdog[MAX_PLAYERS];
 
-forward PinWatchdogCB(playerid);
-public PinWatchdogCB(playerid)
-{
-    if (!IsPlayerConnected(playerid) || !pinIsOpen[playerid])
-    {
-        PinWatchdog[playerid] = 0;
-        return 0;
-    }
-    TogglePlayerControllable(playerid, false); // tegakkan ulang pembekuan
-    return 1;
-}
-
-stock PinMulaiWatchdog(playerid)
-{
-    if (PinWatchdog[playerid]) KillTimer(PinWatchdog[playerid]);
-    PinWatchdog[playerid] = SetTimerEx("PinWatchdogCB", 1500, true, "i", playerid);
-}
-
-stock PinHentikanWatchdog(playerid)
-{
-    if (PinWatchdog[playerid]) { KillTimer(PinWatchdog[playerid]); PinWatchdog[playerid] = 0; }
-}
 stock PinShowHeaderSekali(playerid)
 {
     for (new i = 0; i < 5; i++)
@@ -95435,18 +95441,7 @@ stock PinSaveToDB(playerid)
         pAccountPIN[playerid], PlayerInfo[playerid][pID]);
     mysql_tquery(mMysql, q);
 }
-public PinBukaTerlambat(playerid)
-{
-    if (!IsPlayerConnected(playerid)) return 0;
-    if (pinIsOpen[playerid]) return 0;
-    if (!PinSelesai[playerid]) return 0;
 
-    TogglePlayerControllable(playerid, false);
-    OpenPinPad(playerid, !pAccountHasPIN[playerid]);
-    PinBuatDisplay(playerid);
-    PinMulaiWatchdog(playerid);
-    return 1;
-}
 stock PinBuatDisplay(playerid)
 {
     for (new i = 8; i <= 12; i++) // sembunyikan slot lama yang bermasalah
@@ -95517,7 +95512,6 @@ stock PinClickX(playerid)
 
 stock PinCloseSafe(playerid)
 {
-    PinHentikanWatchdog(playerid);
     if (pinTimer[playerid] != 0) { KillTimer(pinTimer[playerid]); pinTimer[playerid] = 0; }
     CancelSelectTextDraw(playerid);
     for (new i = 0; i < 39; i++) PlayerTextDrawHide(playerid, tdpin[playerid][i]);
@@ -98193,6 +98187,8 @@ epublic:OnPlayerDataLoaded(playerid)
 	    cache_get_value_name(0, "pPassword", PlayerInfo[playerid][pPassword], 64);
 	    cache_get_value_name(0, "pMail", PlayerInfo[playerid][pMail], 64);
      	cache_get_value_name(0, "pass_salt", PlayerInfo[playerid][pass_salt], 6);
+		cache_get_value_name(0, "pCountry", PlayerInfo[playerid][pCountry], 32);
+		cache_get_value_name(0, "pBirthDate", PlayerInfo[playerid][pBirthDate], 20);
 	    cache_get_value_name_int(0, "pID", PlayerInfo[playerid][pID]);
 
 	    SetPVarInt(playerid, "LoginOgran", 60);
@@ -98234,18 +98230,64 @@ epublic:OnPlayerDataLoaded(playerid)
 }
 stock DialogReg(playerid)
 {
-	SPD(playerid, 2, DIALOG_STYLE_INPUT, !"PERATURAN",
-	!""W"\t\t\tSelamat datang di {ff7f00}Noctive{ffffff}\n\t\
-	Untuk melanjutkan permainan, Anda harus melalui langkah pendaftaran sederhana,\n\
-	Data yang Anda masukkan akan digunakan di seluruh ingame Anda..\n\n\
-	{a86cfc}Perhatian{ffffff}:\n\
-	{a86cfc}- {ffffff}Masukkan kata sandi 6 hingga 15 karakter (Surat dan Angka).\n\
-	{a86cfc}- {ffffff}Kata sandi ini akan digunakan untuk setiap login ke akun Anda..\n\
-	{a86cfc}- {ffffff}Gunakan hanya kata sandi yang rumit untuk menghindari peretasan akun game Anda.",
-	!"Setuju", !"Keluar");
-	return true;
+    SPD(playerid, 2, DIALOG_STYLE_INPUT, !"Buat Kata Sandi",
+    !"{FFFFFF}Buat kata sandi 6-15 karakter (huruf dan angka).",
+    !"Lanjut", !"Keluar");
+    return 1;
 }
 
+stock DialogRegConfirmPass(playerid)
+{
+    SPD(playerid, 9010, DIALOG_STYLE_PASSWORD, "Konfirmasi Kata Sandi",
+    "{FFFFFF}Masukkan ulang kata sandi Anda.",
+    "Lanjut", "Kembali");
+    return 1;
+}
+
+stock DialogRegMonth(playerid)
+{
+    new str[256];
+    str[0] = EOS;
+    strcat(str, "Januari\nFebruari\nMaret\nApril\nMei\nJuni\nJuli\nAgustus\nSeptember\nOktober\nNovember\nDesember");
+    ShowPlayerDialog(playerid, 9011, DIALOG_STYLE_LIST, "Tanggal Lahir: Bulan", str, "Pilih", "Kembali");
+    return 1;
+}
+
+stock DialogRegYear(playerid)
+{
+    new str[1024], line[8];
+    for(new y = 2010; y >= 1950; y--)
+    {
+        format(line, sizeof(line), "%d\n", y);
+        strcat(str, line);
+    }
+    SPD(playerid, 9012, DIALOG_STYLE_LIST, "Tanggal Lahir: Tahun", str, "Pilih", "Kembali");
+    return 1;
+}
+
+stock DialogRegDay(playerid)
+{
+    new str[128], line[4];
+    for(new d = 1; d <= 31; d++)
+    {
+        format(line, sizeof(line), "%d\n", d);
+        strcat(str, line);
+    }
+    SPD(playerid, 9013, DIALOG_STYLE_LIST, "Tanggal Lahir: Tanggal", str, "Pilih", "Kembali");
+    return 1;
+}
+
+stock DialogRegCountry(playerid)
+{
+    new str[1024];
+    for(new i = 0; i < sizeof(Countries); i++)
+    {
+        strcat(str, Countries[i]);
+        if(i < sizeof(Countries) - 1) strcat(str, "\n");
+    }
+    SPD(playerid, 9014, DIALOG_STYLE_LIST, "Negara Asal", str, "Pilih", "Kembali");
+    return 1;
+}
 stock DialogAvtorizatia(playerid)
 {
     format(String, 244, ""W"Selamat datang di {ff7f00}Noctive{ffffff}\n\
@@ -101026,7 +101068,9 @@ stock DisplayStats(playerid, i)
 {
     if(PlayerInfo[i][pLogin] == 0) return 1;
 
-    new mstr[2048], lstr[2048], job1[32], job2[32];
+    new mstr[2048], lstr[2048], job1[32], job2[32], sexText[12];
+    if(PlayerInfo[i][pSex] == 1) format(sexText, sizeof(sexText), "Laki-Laki");
+    else format(sexText, sizeof(sexText), "Wanita");
 
     // --- PENGECEKAN NAMA JOB 1 ---
     if(PlayerInfo[i][pJobchiken] == 1) job1 = "Chicken cutting";
@@ -101104,7 +101148,10 @@ stock DisplayStats(playerid, i)
     format(lstr, sizeof(lstr), "{ffff00}Nama\t{ffff00}Keterangan\n{ffffff}Account ID\t%d\n", PlayerInfo[i][pID]);
 
     format(lstr, sizeof(lstr), "%sNama Karakter\t%s\n", lstr, GetPlayerNameEx(i));
-    format(lstr, sizeof(lstr), "%sAlamat Email\t%s\n", lstr, PlayerInfo[i][pMail]);
+    format(lstr, sizeof(lstr), "%sJenis Kelamin\t%s\n", lstr, sexText);
+    format(lstr, sizeof(lstr), "%sNegara Asal\t%s\n", lstr, PlayerCountry[i]);
+    format(lstr, sizeof(lstr), "%sTanggal Lahir\t%s\n", lstr, PlayerBirthDate[i]);
+    //format(lstr, sizeof(lstr), "%sAlamat Email\t%s\n", lstr, PlayerInfo[i][pMail]);
     format(lstr, sizeof(lstr), "%sLevel\t%d\n", lstr, PlayerInfo[i][pLevel]);
     format(lstr, sizeof(lstr), "%sExp\t%d/%d\n", lstr, PlayerInfo[i][pExp], (PlayerInfo[i][pLevel]+1)*4);
     format(lstr, sizeof(lstr), "%sUang\t{00ff00}$%d{ffffff}\n", lstr, PlayerInfo[i][pCash]);
@@ -102675,7 +102722,7 @@ stock BankDialog(playerid)
 	SPD(playerid, 112, DIALOG_STYLE_INPUT, "Bank", "1. Akun saya\n2. {E5D81E}Buka akun baru", "Select", "Close");
 	return 1;
 }
-epublic: OnServerRegistration(playerid)
+public OnServerRegistration(playerid)
 {
     PlayerInfo[playerid][pID] = cache_insert_id();
 
@@ -102686,18 +102733,21 @@ epublic: OnServerRegistration(playerid)
     PlayerInfo[playerid][pCash] = 250;
     PlayerInfo[playerid][pInjured] = 0;
     PlayerInfo[playerid][pDelayDeath] = 0;
-    PlayerInfo[playerid][pWargaNew] = 0;
+    PlayerInfo[playerid][pWargaNew] = 1;
     PlayerInfo[playerid][pPosisiX] = 1683.4011;
-	PlayerInfo[playerid][pPosisiY] = -2244.9191;
-	PlayerInfo[playerid][pPosisiZ] = 13.5435;
-	PlayerInfo[playerid][pPosisiAngle] = 179.7106;
+    PlayerInfo[playerid][pPosisiY] = -2244.9191;
+    PlayerInfo[playerid][pPosisiZ] = 13.5435;
+    PlayerInfo[playerid][pPosisiAngle] = 179.7106;
     cskin[playerid] = 59, PlayerInfo[playerid][pLogin] = 1, SetPlayerHealthEx(playerid, 100);
-	SendClientMessageEx(playerid, -1, "{FF0000}PanBot : {ffffff}Gunakan {ff0000}/Claimsp {FFFFFF}Untuk Mengambil Staterpack");
-	SendClientMessageEx(playerid, -1, "{FF0000}PanBot : {ffffff}Gunakan {ff0000}/Mission {FFFFFF}Untuk Melihat Misi Warga Baru Noctive");
-	SendClientMessageEx(playerid, -1, "{FF0000}PanBot : {ffffff}Gunakan {ff0000}/hbemode {FFFFFF}Untuk Mengubah Hbe");
+    SendClientMessageEx(playerid, -1, "{FF0000}PanBot : {ffffff}Gunakan {ff0000}/Claimsp {FFFFFF}Untuk Mengambil Staterpack");
+    SendClientMessageEx(playerid, -1, "{FF0000}PanBot : {ffffff}Gunakan {ff0000}/Mission {FFFFFF}Untuk Melihat Misi Warga Baru Noctive");
+    SendClientMessageEx(playerid, -1, "{FF0000}PanBot : {ffffff}Gunakan {ff0000}/hbemode {FFFFFF}Untuk Mengubah Hbe");
     for(new i; i < MAX_PLAYER_TOYS; i++) ToyInfo[playerid][toyModel][i] = 0;
+
     SpawnPlayerEx(playerid);
-	return 1;
+    SetCameraBehindPlayer(playerid);
+    ShowPlayerDialog(playerid, 5559, DIALOG_STYLE_LIST, "Pilih Lokasi Spawn", "Pantai\nStasiun\nLast Exit", "Pilih", "Keluar");
+    return 1;
 }
 epublic: CameraBihind(playerid) return SetCameraBehindPlayer(playerid);
 
@@ -113101,15 +113151,11 @@ CMD:phone(playerid, params[])
 }
 CMD:fixme(playerid, params[])
 {
-    // PENGECUALIAN PIN: fixme dilarang selama keypad PIN terbuka
-    if (pinIsOpen[playerid])
-        return ShowPanjulNotif(playerid, "Fitur fixme tidak tersedia selama verifikasi PIN berlangsung.");
-
-    if(IsPlayerInAnyVehicle(playerid)) return Error(playerid, "Turun dari kendaraan terlebih dahulu");
-    new str[1024];
-    format(str, sizeof(str), "Keluhan\tKeterangan\n"WHITE_E"Bug Visual\t"WHITE_E"Apabila anda tidak dapat melihat object/player apapun (berada di alam baka)\n{8b8989}Karakter Stuck\t"WHITE_E"{8b8989}Apabila anda stuck karena tertimpa object/kendaraan sehingga tidak dapat bergerak\nKarakter Freezing\t"WHITE_E"Apabila karakter anda benar benar tidak dapat bergerak atau berjalan sama sekali");
-    ShowPlayerDialog(playerid, DIALOG_FIXME, DIALOG_STYLE_TABLIST_HEADERS, "{ffff00}ReeLife {ffffff}- Fix Me", str, "Pilih", "Tutup");
-    return 1;
+	if(IsPlayerInAnyVehicle(playerid)) return Error(playerid, "Turun dari kendaraan terlebih dahulu");
+	new str[1024];
+	format(str, sizeof(str), "Keluhan\tKeterangan\n"WHITE_E"Bug Visual\t"WHITE_E"Apabila anda tidak dapat melihat object/player apapun (berada di alam baka)\n{8b8989}Karakter Stuck\t"WHITE_E"{8b8989}Apabila anda stuck karena tertimpa object/kendaraan sehingga tidak dapat bergerak\nKarakter Freezing\t"WHITE_E"Apabila karakter anda benar benar tidak dapat bergerak atau berjalan sama sekali");
+	ShowPlayerDialog(playerid, DIALOG_FIXME, DIALOG_STYLE_TABLIST_HEADERS, "{ffff00}ReeLife {ffffff}- Fix Me", str, "Pilih", "Tutup");
+	return 1;
 }
 CMD:config(playerid, params[])
 {
@@ -114392,7 +114438,6 @@ public PinTimeoutCB(playerid)
         SendClientMessage(playerid, -1, "Waktu memasukkan PIN telah habis.");
         pinTimer[playerid] = 0; // sudah terbakar sendiri
         ClosePinPad(playerid);
-		Kick(playerid);
         CallLocalFunction("OnPinTimeout", "i", playerid);
     }
     return 1;
@@ -114511,7 +114556,7 @@ stock PinSubmit(playerid)
         if (pinAttemptsLeft[playerid] <= 0)
         {
             SendClientMessage(playerid, -1, "PIN salah 3 kali. Kamu akan di-kick.");
-            //GameTextForPlayer(playerid, "~r~PIN SALAH 3X~n~~w~ANDA AKAN DIKICK", 3000, 3);
+            GameTextForPlayer(playerid, "~r~PIN SALAH 3X~n~~w~ANDA AKAN DIKICK", 3000, 3);
             CallLocalFunction("OnPinLockedOut", "i", playerid);
             ClosePinPad(playerid);
             SetTimerEx("PinKickCB", PIN_KICK_DELAY, false, "i", playerid);

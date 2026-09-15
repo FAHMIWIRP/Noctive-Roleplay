@@ -28,7 +28,13 @@ new VendingData[MAX_VENDING][vmInfo];
 new TotalVending = 0;
 
 // ================= [ FUNGSI & CALLBACK ] =================
-
+stock GetNearestVending(playerid) {
+    for (new i = 0; i < TotalVending; i++) {
+        if (IsPlayerInRangeOfPoint(playerid, 2.5, VendingData[i][vmX], VendingData[i][vmY], VendingData[i][vmZ]))
+            return i; // KEMBALIKAN INDEX ARRAY, BUKAN vmID
+    }
+    return -1;
+}
 stock UpdateVendingLabel(id) {
     new str[512], status[20];
     status = (VendingData[id][vmLocked]) ? ("{ff0000}Locked") : ("{2ecc71}Unlocked");
